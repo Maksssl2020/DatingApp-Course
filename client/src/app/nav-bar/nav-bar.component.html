@@ -1,0 +1,68 @@
+<nav
+  class="w-full h-[100px] bg-custom-gray-100 p-4 flex items-center gap-8 relative"
+>
+  <h1 class="text-3xl font-bold">Dating APP</h1>
+
+  @if (accountService.currentUser()) {
+  <ul class="h-full flex items-center text-xl gap-4">
+    <li>Matches</li>
+    <li>Lists</li>
+    <li>Messages</li>
+  </ul>
+  } @if (accountService.currentUser()) {
+  <div
+    (click)="toogleDropdown()"
+    class="w-[250px] min-h-[300px] h-auto ml-auto flex flex-col gap-4 items-center absolute inset-0"
+  >
+    <div class="h-[100px] w-auto flex items-center justify-center">
+      <button
+        class="size-[50px] rounded-xl border-2 border-custom-blue-200"
+      ></button>
+    </div>
+    <div
+      [@openCloseDropdown]="isDropdownOpen ? 'open' : 'closed'"
+      class="w-[200px] font-bold tracking-wider rounded-xl border-2 border-custom-blue-200 flex flex-col"
+    >
+      <button
+        class="w-full uppercase rounded-t-xl h-[50px] border-b-2 border-custom-blue-200"
+      >
+        Edit profile
+      </button>
+      <button
+        (click)="logout()"
+        class="w-full uppercase rounded-t-xl h-[50px] rounded-b-xl"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+  } @if (!accountService.currentUser()) {
+  <form
+    #loginForm="ngForm"
+    (ngSubmit)="login()"
+    class="ml-auto flex gap-4 text-lg"
+    autocomplete="off"
+  >
+    <input
+      name="username"
+      [(ngModel)]="model.username"
+      type="text"
+      placeholder="Username"
+      class="h-[50px] w-[250px] rounded-xl px-4 text-custom-white-100 placeholder:text-custom-white-100 border-2 border-custom-blue-200 bg-transparent focus:outline-custom-white-100"
+    />
+    <input
+      name="password"
+      [(ngModel)]="model.password"
+      type="password"
+      placeholder="Password"
+      class="h-[50px] w-[250px] rounded-xl px-4 text-custom-white-100 placeholder:text-custom-white-100 border-2 border-custom-blue-200 bg-transparent focus:outline-custom-white-100"
+    />
+    <button
+      type="submit"
+      class="w-[100px] h-[50px] rounded-xl text-sm border-2 border-custom-blue-200 text-custom-blue-200 uppercase font-bold tracking-wider"
+    >
+      Login
+    </button>
+  </form>
+  }
+</nav>

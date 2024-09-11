@@ -12,7 +12,7 @@ namespace API.Controllers;
 public class AccountController(DataContext dataContext, ITokenService tokenService) : BaseApiController
 {
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register(RegisterDTO registerDTO)
+    public async Task<ActionResult<UserDto>> Register(RegisterDTO registerDTO)
     {
 
         if (await UsernameExists(registerDTO.Username))
@@ -32,7 +32,13 @@ public class AccountController(DataContext dataContext, ITokenService tokenServi
         dataContext.Users.Add(user);
         await dataContext.SaveChangesAsync();
 
-        return user;
+        var userDto = await Login(new LoginDto
+        {
+            Username = registerDTO.Username,
+            Password = registerDTO.Password
+        });
+
+        return userDto;
     }
 
     [HttpPost("login")]

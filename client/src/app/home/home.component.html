@@ -1,0 +1,25 @@
+<div class="flex flex-col items-center">
+  <div class="flex flex-col gap-4 items-center">
+    @if (!registerMode) {
+    <h1 class="font-bold text-5xl">Find your match!</h1>
+    <p class="text-2xl">
+      Come on in to view your matches... all you need to do is sign up!
+    </p>
+    <div class="flex gap-6">
+      <button
+        (click)="registerToggle()"
+        class="h-[75px] w-[250px] rounded-xl border-2 border-custom-blue-200 uppercase font-bold tracking-wider text-2xl"
+      >
+        Register
+      </button>
+      <button
+        class="h-[75px] w-[250px] rounded-xl border-2 border-custom-blue-200 uppercase font-bold tracking-wider text-2xl"
+      >
+        Learn more
+      </button>
+    </div>
+    } @else {
+    <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+    }
+  </div>
+</div>
