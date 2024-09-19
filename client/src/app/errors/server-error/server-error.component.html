@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-4 text-xl">
+  <h1 class="text-4xl font-bold">Internal Server Error</h1>
+  @if (error) {
+  <h2 class="text-3xl font-bold text-red-500">Error: {{ error.message }}</h2>
+  <p>Note: if you're seeing this error the angular is not to blame!</p>
+  <p>What to do next?</p>
+  <ol class="list-decimal ml-12">
+    <li>
+      Open browser dev tools and check the failing network request in the
+      network tab
+    </li>
+    <li>Examine the URL of the failing request</li>
+    <li>
+      Reporoduce the error in postman - if you can reproduce the error then
+      angular is not to blame
+    </li>
+  </ol>
+  <p>
+    Following is the stack trace - check the first 2 lines, this tells you
+    exactly which line of code caused the problem!
+  </p>
+  <code class="text-red-500">{{ error.details }}</code>
+  }
+</div>
