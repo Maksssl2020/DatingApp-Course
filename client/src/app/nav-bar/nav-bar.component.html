@@ -1,23 +1,47 @@
 <nav
   class="w-full h-[100px] bg-custom-gray-100 p-4 flex items-center gap-8 relative"
 >
-  <h1 class="text-3xl font-bold">Dating APP</h1>
+  <a routerLink="/" class="text-3xl font-bold">Dating APP</a>
 
-  @if (accountService.currentUser()) {
   <ul class="h-full flex items-center text-xl gap-4">
-    <li>Matches</li>
-    <li>Lists</li>
-    <li>Messages</li>
+    @if (accountService.currentUser()) {
+    <li>
+      <a
+        routerLink="/members"
+        routerLinkActive="text-custom-blue-200"
+        class="hover:text-custom-blue-200"
+        >Matches</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/lists"
+        routerLinkActive="text-custom-blue-200"
+        class="hover:text-custom-blue-200"
+        >Lists</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/messages"
+        routerLinkActive="text-custom-blue-200"
+        class="hover:text-custom-blue-200"
+        >Messages</a
+      >
+    </li>
+    }
   </ul>
-  } @if (accountService.currentUser()) {
+  @if (accountService.currentUser()) {
   <div
     (click)="toogleDropdown()"
-    class="w-[250px] min-h-[300px] h-auto ml-auto flex flex-col gap-4 items-center absolute inset-0"
+    class="w-[250px] min-h-[300px] h-auto ml-auto flex flex-col items-center absolute inset-0"
   >
     <div class="h-[100px] w-auto flex items-center justify-center">
       <button
-        class="size-[50px] rounded-xl border-2 border-custom-blue-200"
-      ></button>
+        class="w-[200px] h-[50px] font-medium rounded-xl border-2 border-custom-blue-200"
+      >
+        Hello, {{ accountService.currentUser()?.username | titlecase }}
+      </button>
     </div>
     <div
       [@openCloseDropdown]="isDropdownOpen ? 'open' : 'closed'"

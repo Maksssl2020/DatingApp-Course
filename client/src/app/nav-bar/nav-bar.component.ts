@@ -1,7 +1,3 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AccountService } from '../_services/account.service';
-import { NgIf } from '@angular/common';
 import {
   animate,
   state,
@@ -9,11 +5,17 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AccountService } from '../_services/account.service';
+import { ToastrService } from 'ngx-toastr';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink, RouterLinkActive, TitleCasePipe],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
   animations: [
@@ -39,20 +41,25 @@ import {
 })
 export class NavBarComponent {
   accountService = inject(AccountService);
+  private router = inject(Router);
+  private toastr = inject(ToastrService);
   isDropdownOpen = false;
   model: any = {};
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
+        this.router.navigateByUrl('/members');
       },
-      error: (err) => console.log(err),
+      error: (err) => {
+        this.toastr.error(err.error);
+      },
     });
   }
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 
   toogleDropdown() {
