@@ -1,0 +1,49 @@
+<div
+  class="mb-4 bg-custom-black-100 w-[250px] border-2 border-custom-blue-200 rounded-xl card"
+>
+  <div
+    class="w-full h-auto card-img-wrapper border-b-2 border-custom-blue-200 rounded-t-xl"
+  >
+    <img
+      class="inset-0 object-cover size-full rounded-t-xl"
+      src="{{ member().photoUrl }}"
+      alt="{{ member().knownAs }}"
+    />
+
+    <ul class="w-full h-auto flex justify-center py-2 gap-4 icons animate">
+      <li>
+        <button
+          routerLink="/members/{{ member().username }}"
+          class="bg-custom-blue-200 size-12 text-center text-[24px] text-white rounded-xl"
+        >
+          <i class="bi bi-person"></i>
+        </button>
+      </li>
+      <li>
+        <button
+          class="bg-custom-blue-200 size-12 text-center text-[24px] text-white rounded-xl"
+        >
+          <i class="bi bi-heart"></i>
+        </button>
+      </li>
+      <li>
+        <button
+          class="bg-custom-blue-200 size-12 text-center text-[24px] text-white rounded-xl"
+        >
+          <i class="bi bi-chat"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="p-2 w-full h-auto gap-2 flex justify-center items-center text-custom-white-100 text-[24px]"
+  >
+    <i class="bi bi-person"></i>
+    <h3 class="text-center mb-1">{{ member().knownAs }}</h3>
+  </div>
+  <p
+    class="w-full p-2 h-auto items-center justify-center flex text-[20px] text-custom-blue-100"
+  >
+    {{ member().city }}
+  </p>
+</div>

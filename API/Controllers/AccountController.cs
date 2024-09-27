@@ -21,25 +21,6 @@ public class AccountController(DataContext dataContext, ITokenService tokenServi
         }
 
         return Ok();
-        // using var hmac = new HMACSHA512();
-
-        // var user = new AppUser
-        // {
-        //     Username = registerDTO.Username.ToLower(),
-        //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
-        //     PasswordSalt = hmac.Key
-        // };
-
-        // dataContext.Users.Add(user);
-        // await dataContext.SaveChangesAsync();
-
-        // var userDto = await Login(new LoginDto
-        // {
-        //     Username = registerDTO.Username,
-        //     Password = registerDTO.Password
-        // });
-
-        // return userDto;
     }
 
     [HttpPost("login")]
