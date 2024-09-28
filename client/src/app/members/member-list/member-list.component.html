@@ -1,7 +1,7 @@
 <div
   class="grid w-full h-auto px-20 grid-cols-12 justify-between overflow-hidden"
 >
-  @for(member of members; track member.id) {
+  @for(member of memberService.members(); track member.id) {
   <div class="col-span-2 space-y-4">
     <app-member-card [member]="member" />
   </div>

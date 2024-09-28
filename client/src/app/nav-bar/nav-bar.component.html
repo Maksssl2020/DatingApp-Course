@@ -45,9 +45,10 @@
     </div>
     <div
       [@openCloseDropdown]="isDropdownOpen ? 'open' : 'closed'"
-      class="w-[200px] font-bold tracking-wider rounded-xl border-2 border-custom-blue-200 flex flex-col"
+      class="w-[200px] font-bold tracking-wider z-10 rounded-xl border-2 bg-custom-black-100 border-custom-blue-200 flex flex-col"
     >
       <button
+        routerLink="member/edit"
         class="w-full uppercase rounded-t-xl h-[50px] border-b-2 border-custom-blue-200"
       >
         Edit profile

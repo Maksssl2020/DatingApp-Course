@@ -1,0 +1,132 @@
+<div class="w-full h-auto flex flex-col justify-center items-center">
+  <div class="flex w-[1375px] h-auto mb-12">
+    <h1 class="text-4xl">Your profile</h1>
+    @if (editForm?.dirty) {
+    <div
+      class="w-[850px] h-[100px] bg-custom-gray-100 ml-auto rounded-xl flex p-4 text-lg"
+    >
+      <p>
+        <span class="font-bold">Information: &nbsp;</span>You have made changes.
+        Any unsaved change will be lost.
+      </p>
+    </div>
+    }
+  </div>
+  <div class="w-[1375px] h-auto flex justify-between">
+    <div
+      class="w-[500px] h-[950px] border-2 border-custom-blue-200 rounded-xl flex flex-col gap-4"
+    >
+      <div class="w-full h-auto rounded-t-xl p-12">
+        <img
+          class="size-full rounded-xl inset-0 object-cover border-2 border-custom-blue-200"
+          src="{{ member?.photoUrl }}"
+          alt="{{ member?.knownAs }}"
+        />
+      </div>
+      <div class="w-full h-auto py-2 px-6 flex flex-col gap-3 text-xl">
+        <div>
+          <label class="font-bold">Location:</label>
+          <p>{{ member?.city }}, {{ member?.country }}</p>
+        </div>
+        <div>
+          <label class="font-bold">Age:</label>
+          <p>{{ member?.age }}</p>
+        </div>
+        <div>
+          <label class="font-bold">Last active:</label>
+          <p>{{ member?.lastActive }}</p>
+        </div>
+        <div>
+          <label class="font-bold">Member since:</label>
+          <p>{{ member?.created }}</p>
+        </div>
+      </div>
+      <div class="w-full flex px-2 py-4 justify-center gap-4">
+        <button
+          [disabled]="!editForm?.dirty"
+          type="submit"
+          form="editForm"
+          class="uppercase hover:bg-custom-blue-200 bg-custom-blue-100 h-[50px] w-full border-2 rounded-xl font-bold text-xl"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+    <div class="w-[850px] h-auto flex flex-col">
+      <div
+        class="w-full h-[75px] border-b-2 border-custom-blue-200 flex px-6 gap-4 text-xl"
+      >
+        <button
+          (click)="setSelectedButton('about')"
+          [ngClass]="{ 'text-custom-blue-200': isButtonSelected('about') }"
+        >
+          About {{ member?.knownAs }}
+        </button>
+        <button
+          (click)="setSelectedButton('photos')"
+          [ngClass]="{ 'text-custom-blue-200': isButtonSelected('photos') }"
+        >
+          Edit Photos
+        </button>
+      </div>
+      <div class="flex py-4 h-auto">
+        @if (isButtonSelected('about')) {
+        <form
+          id="editForm"
+          name="editForm"
+          (ngSubmit)="updateMember()"
+          class="flex flex-col gap-6 w-full justify-between"
+          #editForm="ngForm"
+        >
+          <div class="flex flex-col gap-3">
+            <h2 class="font-bold text-3xl">Description</h2>
+            <textarea
+              name="introduction"
+              form="editForm"
+              [(ngModel)]="member.introduction"
+              class="text-lg border-2 border-custom-blue-200 bg-transparent rounded-xl py-2 px-4 h-[200px] resize-none"
+            ></textarea>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="font-bold text-3xl">Looking for</h2>
+            <textarea
+              name="lookingFor"
+              [(ngModel)]="member.lookingFor"
+              class="text-lg border-2 border-custom-blue-200 bg-transparent rounded-xl py-2 px-4 h-[200px] resize-none"
+            ></textarea>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="font-bold text-3xl">Interests</h2>
+            <textarea
+              name="interests"
+              [(ngModel)]="member.interests"
+              class="text-lg border-2 border-custom-blue-200 bg-transparent rounded-xl py-2 px-4 h-[200px] resize-none"
+            ></textarea>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="font-bold text-3xl">Location Details</h2>
+            <div class="flex justify-between">
+              <div class="flex gap-2 items-center w-[48%]">
+                <label class="text-xl">City:</label>
+                <input
+                  name="city"
+                  [(ngModel)]="member.city"
+                  class="h-[50px] rounded-xl border-2 border-custom-blue-200 bg-transparent px-2 w-full"
+                />
+              </div>
+              <div class="flex gap-2 items-center w-[48%]">
+                <label class="text-xl">Country:</label>
+                <input
+                  name="country"
+                  [(ngModel)]="member.country"
+                  class="h-[50px] rounded-xl border-2 border-custom-blue-200 bg-transparent px-2 w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
