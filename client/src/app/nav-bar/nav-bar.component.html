@@ -34,18 +34,23 @@
   @if (accountService.currentUser()) {
   <div
     (click)="toogleDropdown()"
-    class="w-[250px] min-h-[300px] h-auto ml-auto flex flex-col items-center absolute inset-0"
+    class="w-[250px] min-h-[300px] h-auto ml-auto flex flex-col items-center absolute inset-0 mr-4"
   >
     <div class="h-[100px] w-auto flex items-center justify-center">
       <button
-        class="w-[200px] h-[50px] font-medium rounded-xl border-2 border-custom-blue-200"
+        class="w-[250px] h-[50px] flex justify-center items-center gap-2 font-medium rounded-xl border-2 border-custom-blue-200"
       >
+        <img
+          class="size-[35px] rounded-xl inset-0 object-cover border-2 border-custom-blue-200"
+          src="{{ accountService.currentUser()?.mainPhotoUrl || '/user.png' }}"
+          alt="user-main-image"
+        />
         Hello, {{ accountService.currentUser()?.username | titlecase }}
       </button>
     </div>
     <div
       [@openCloseDropdown]="isDropdownOpen ? 'open' : 'closed'"
-      class="w-[200px] font-bold tracking-wider z-10 rounded-xl border-2 bg-custom-black-100 border-custom-blue-200 flex flex-col"
+      class="w-[250px] font-bold tracking-wider z-10 rounded-xl border-2 bg-custom-black-100 border-custom-blue-200 flex flex-col"
     >
       <button
         routerLink="member/edit"

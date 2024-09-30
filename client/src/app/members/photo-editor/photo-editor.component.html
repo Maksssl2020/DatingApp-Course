@@ -1,0 +1,95 @@
+<div class="w-full h-auto flex flex-col gap-24">
+  <div class="grid grid-cols-4 w-full h-auto gap-4">
+    @for (photo of member().photos; track $index) {
+    <div class="col-span-1 w-[175px] h-[225px]">
+      <img
+        class="size-[175px] border-2 border-custom-blue-200 rounded-xl"
+        src="{{ photo.url }}"
+        alt="{{ photo.id + ' ' + member().knownAs }}"
+      />
+      <div class="w-full flex justify-center gap-2 mt-2">
+        <button
+          class="px-3 rounded-xl"
+          [disabled]="photo.isMain"
+          (click)="setMainPhoto(photo)"
+          [ngClass]="
+            photo.isMain
+              ? 'bg-custom-blue-100'
+              : 'bg-transparent border-2 border-custom-blue-100'
+          "
+        >
+          Main
+        </button>
+        <button
+          [disabled]="photo.isMain"
+          (click)="deletePhoto(photo.id)"
+          class="size-[38px] bg-custom-blue-200 rounded-xl"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <div class="flex justify-between">
+      <div class="w-[30%] flex flex-col gap-4">
+        <h2 class="text-3xl font-bold">Add Photos</h2>
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          class="hidden"
+          #fileUpload
+          (change)="onFileSelected()"
+        />
+
+        <label
+          for="fileInput"
+          #dropZone
+          class="size-[200px] cursor-pointer flex flex-col items-center justify-center gap-2 rounded-xl bg-transparent border-2 border-custom-blue-200 text-custom-white-100 px-4 py-2 hover:border-custom-blue-100 hover:text-custom-blue-100 transition"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop($event)"
+        >
+          <i class="bi bi-cloud-arrow-up text-[48px]"></i>
+          <span class="text-xl">Select Files</span>
+        </label>
+      </div>
+
+      @if (addedFiles.length > 0) {
+      <div class="flex flex-col gap-4 w-[65%]">
+        <h2 class="text-3xl font-bold">Added Files: {{ addedFiles.length }}</h2>
+        <ul id="fileList" class="text-custom-white-100">
+          <li
+            class="flex w-full justify-between font-bold pb-1 mb-3 border-b border-custom-blue-200"
+          >
+            <span>Name</span> <span>Size</span>
+          </li>
+          @for (file of addedFiles; track $index) {
+          <li class="flex justify-between w-full h-[30px]">
+            <span class="font-bold">{{ file.name }}</span>
+            <span>{{ file.size / (1024 * 1024) | number : "1.2-2" }} MB</span>
+          </li>
+          }
+        </ul>
+
+        <div class="flex gap-3 justify-center">
+          <button
+            class="w-[200px] h-[50px] bg-transparent border-2 border-custom-blue-200 rounded-xl flex justify-center items-center gap-3 text-custom-white-100 hover:text-custom-blue-100 hover:border-custom-blue-100 transition"
+            (click)="uploadAllPhotos()"
+          >
+            <i class="bi bi-cloud-arrow-up text-[24px]"></i> Upload all
+          </button>
+          <button
+            class="w-[200px] h-[50px] bg-transparent border-2 border-custom-blue-200 rounded-xl flex justify-center items-center gap-3 text-custom-white-100 hover:text-custom-blue-100 hover:border-custom-blue-100 transition"
+          >
+            <i class="bi bi-trash3 text-[24px]"></i>
+            Remove all
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

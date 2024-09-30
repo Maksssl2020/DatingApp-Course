@@ -90,7 +90,11 @@
       </div>
       } @else if (isButtonSelected('photos')) {
       <div class="w-full h-auto gap-2">
-        <gallery [items]="images" thumbPosition="left"></gallery>
+        <gallery
+          [items]="images"
+          [itemAutosize]="true"
+          thumbPosition="left"
+        ></gallery>
       </div>
       } @else if (isButtonSelected('messages')) {
       <div class="flex flex-col gap-6">

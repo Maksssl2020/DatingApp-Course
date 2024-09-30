@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_modules/Member';
-import { of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
+import { formatDate } from '@angular/common';
+import { Photo } from '../_modules/Photo';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +42,31 @@ export class MembersService {
         );
       })
     );
+  }
+
+  uploadMemberPhoto(photos: FormData) {
+    return this.http.post<Photo[]>(this.baseUrl + 'users/add-photos', photos);
+  }
+
+  setMainPhoto(photo: Photo) {
+    return this.http
+      .put(this.baseUrl + 'users/set-main-photo/' + photo.id, {})
+      .pipe(
+        tap(() => {
+          this.members.update((members) =>
+            members.map((member) => {
+              if (member.photos.includes(photo)) {
+                member.photoUrl = photo.url;
+              }
+
+              return member;
+            })
+          );
+        })
+      );
+  }
+
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
   }
 }

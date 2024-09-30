@@ -1,3 +1,4 @@
+@if (member) {
 <div class="w-full h-auto flex flex-col justify-center items-center">
   <div class="flex w-[1375px] h-auto mb-12">
     <h1 class="text-4xl">Your profile</h1>
@@ -19,26 +20,26 @@
       <div class="w-full h-auto rounded-t-xl p-12">
         <img
           class="size-full rounded-xl inset-0 object-cover border-2 border-custom-blue-200"
-          src="{{ member?.photoUrl }}"
-          alt="{{ member?.knownAs }}"
+          src="{{ member.photoUrl }}"
+          alt="{{ member.knownAs }}"
         />
       </div>
       <div class="w-full h-auto py-2 px-6 flex flex-col gap-3 text-xl">
         <div>
           <label class="font-bold">Location:</label>
-          <p>{{ member?.city }}, {{ member?.country }}</p>
+          <p>{{ member.city }}, {{ member.country }}</p>
         </div>
         <div>
           <label class="font-bold">Age:</label>
-          <p>{{ member?.age }}</p>
+          <p>{{ member.age }}</p>
         </div>
         <div>
           <label class="font-bold">Last active:</label>
-          <p>{{ member?.lastActive }}</p>
+          <p>{{ member.lastActive }}</p>
         </div>
         <div>
           <label class="font-bold">Member since:</label>
-          <p>{{ member?.created }}</p>
+          <p>{{ member.created }}</p>
         </div>
       </div>
       <div class="w-full flex px-2 py-4 justify-center gap-4">
@@ -60,7 +61,7 @@
           (click)="setSelectedButton('about')"
           [ngClass]="{ 'text-custom-blue-200': isButtonSelected('about') }"
         >
-          About {{ member?.knownAs }}
+          About {{ member.knownAs }}
         </button>
         <button
           (click)="setSelectedButton('photos')"
@@ -125,8 +126,15 @@
             </div>
           </div>
         </form>
+        } @else if (isButtonSelected('photos')) {
+        <app-photo-editor
+          [member]="member"
+          (memberChange)="onMemberChange($event)"
+        />
         }
       </div>
     </div>
   </div>
 </div>
+
+}
