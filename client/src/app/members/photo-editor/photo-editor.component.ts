@@ -65,6 +65,17 @@ export class PhotoEditorComponent {
     this.memberService.uploadMemberPhoto(formData).subscribe({
       next: (response) => {
         const updatedMember = this.member();
+        const accountUser = this.accountService.currentUser();
+
+        if (updatedMember.photos.length == 0 && accountUser) {
+          const foundPhoto = response.filter((photo) => photo.isMain)[0];
+
+          accountUser.mainPhotoUrl = foundPhoto.url;
+          updatedMember.photoUrl = foundPhoto.url;
+
+          this.accountService.setCurrentUser(accountUser);
+        }
+
         updatedMember.photos.push(...response);
         this.memberChange.emit(updatedMember);
         this.addedFiles = [];

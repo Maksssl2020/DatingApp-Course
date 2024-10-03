@@ -79,11 +79,12 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
             return BadRequest("Cannot update user!");
         }
 
+
         var photos = new List<PhotoDto>();
 
-        foreach (var file in formFiles)
+        for (int i = 0; i < formFiles.Count; i++)
         {
-            var result = await photoService.AddPhotoAsync(file);
+            var result = await photoService.AddPhotoAsync(formFiles[i]);
 
             if (result.Error != null)
             {
@@ -93,8 +94,13 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
             var photo = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
-                PublicId = result.PublicId
+                PublicId = result.PublicId,
             };
+
+            if (i == 0 && user.Photos.Count == 0)
+            {
+                photo.IsMain = true;
+            }
 
             user.Photos.Add(photo);
             photos.Add(mapper.Map<PhotoDto>(photo));

@@ -1,6 +1,6 @@
 <form
+  [formGroup]="registerForm"
   class="flex flex-col items-center gap-8"
-  #registerForm="ngForm"
   (ngSubmit)="register()"
   autocomplete="off"
 >
@@ -10,34 +10,80 @@
     >
       Sign Up!
     </h2>
-    <div class="flex flex-col w-full h-auto gap-2">
-      <label class="ml-3 text-xl">Username</label>
-      <input
-        name="username"
-        [(ngModel)]="model.username"
-        class="w-full text-lg h-[75px] rounded-xl border-2 border-custom-white-100 bg-transparent focus-within:shadow-xl focus:shadow-custom-blue-200 focus:outline-none px-4"
-      />
+    <app-text-input
+      [formControlName]="'username'"
+      [label]="'Username'"
+      [type]="'text'"
+    />
+    <app-text-input
+      [formControlName]="'password'"
+      [label]="'Password'"
+      [type]="'password'"
+    />
+    <app-text-input
+      [formControlName]="'confirmPassword'"
+      [label]="'Confirm Password'"
+      [type]="'password'"
+    />
+
+    <div
+      class="w-full text-lg h-[75px] rounded-xl border-2 border-custom-blue-100 bg-transparent px-4 flex items-center gap-4"
+    >
+      <label class="text-xl font-bold">I'm a:</label>
+      <label>
+        <input type="radio" value="male" formControlName="gender" /> Male
+      </label>
+      <label>
+        <input type="radio" value="female" formControlName="gender" /> Female
+      </label>
     </div>
-    <div class="flex flex-col w-full h-auto gap-2">
-      <label class="ml-3 text-xl">Password</label>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="model.password"
-        class="w-full text-lg h-[75px] rounded-xl border-2 border-custom-white-100 bg-transparent focus-within:shadow-xl focus:shadow-custom-blue-200 focus:outline-none px-4"
-      />
+
+    <app-text-input
+      [formControlName]="'knownAs'"
+      [label]="'Known As'"
+      [type]="'text'"
+    />
+
+    <app-text-input
+      [formControlName]="'dateOfBirth'"
+      [label]="'Date Of Birth'"
+      [type]="'date'"
+    />
+
+    <app-text-input
+      [formControlName]="'city'"
+      [label]="'City'"
+      [type]="'text'"
+    />
+
+    <app-text-input
+      [formControlName]="'country'"
+      [label]="'Country'"
+      [type]="'text'"
+    />
+
+    @if (validationErrors) {
+    <div class="w-full h-auto justify-center flex flex-col">
+      <ul>
+        @for (error of validationErrors; track $index) {
+        <li class="text-red-500 text-lg">{{ error }}</li>
+        }
+      </ul>
     </div>
-    <div class="w-full h-[50px] flex justify-center gap-6">
+    }
+
+    <div class="w-full h-[75px] flex justify-center gap-6">
       <button
+        [disabled]="registerForm.invalid"
         type="submit"
-        class="w-[200px] uppercase text-xl h-full font-medium border-2 border-custom-blue-200 rounded-xl hover:bg-custom-blue-200 hover:border-custom-white-100"
+        class="w-[250px] h-full uppercase text-xl font-medium border-2 border-custom-blue-200 rounded-xl hover:bg-custom-blue-200 hover:border-custom-white-100"
       >
         Register
       </button>
       <button
         type="button"
         (click)="cancel()"
-        class="w-[200px] uppercase text-xl h-full font-medium border-2 border-custom-blue-200 rounded-xl hover:bg-custom-blue-200 hover:border-custom-white-100"
+        class="w-[250px] h-full uppercase text-xl font-medium border-2 border-custom-blue-200 rounded-xl hover:bg-custom-blue-200 hover:border-custom-white-100"
       >
         Cancel
       </button>

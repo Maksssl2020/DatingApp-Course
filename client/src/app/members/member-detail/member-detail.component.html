@@ -5,7 +5,7 @@
     <div class="w-full h-auto rounded-t-xl p-12">
       <img
         class="size-full rounded-xl inset-0 object-cover border-2 border-custom-blue-200"
-        src="{{ member?.photoUrl }}"
+        src="{{ member?.photoUrl ? member?.photoUrl : '/user.png' }}"
         alt="{{ member?.knownAs }}"
       />
     </div>
