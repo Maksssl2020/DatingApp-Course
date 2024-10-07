@@ -45,7 +45,7 @@
           src="{{ accountService.currentUser()?.mainPhotoUrl || '/user.png' }}"
           alt="user-main-image"
         />
-        Hello, {{ accountService.currentUser()?.username | titlecase }}
+        Hello, {{ accountService.currentUser()?.knownAs }}
       </button>
     </div>
     <div

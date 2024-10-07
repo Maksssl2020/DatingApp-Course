@@ -1,9 +1,21 @@
-<div
-  class="grid w-full h-auto px-20 grid-cols-12 justify-between overflow-hidden"
->
-  @for(member of memberService.members(); track member.id) {
-  <div class="col-span-2 space-y-4">
+<div class="w-full h-auto flex flex-col justify-between overflow-hidden gap-16">
+  <div class="flex justify-center w-full gap-8">
+    @for(member of memberService.paginatedResult()?.items; track member.id) {
     <app-member-card [member]="member" />
+    }
   </div>
-  }
+
+  <div class="w-full h-[50px] flex justify-center items-center gap-4">
+    @for (number of getPaginationListNumbers(totalPages()); track $index) {
+    <button
+      (click)="pageChanged(number + 1)"
+      class="size-12 rounded-full font-bold text-xl border-4 border-custom-blue-200 flex justify-center items-center"
+      [ngClass]="
+        userParams.pageNumber === number + 1 ? 'bg-custom-blue-200' : ''
+      "
+    >
+      {{ number + 1 }}
+    </button>
+    }
+  </div>
 </div>

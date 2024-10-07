@@ -1,5 +1,5 @@
 import { JsonPipe, NgClass, NgIf } from '@angular/common';
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,10 +8,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { TextInputComponent } from '../_forms/text-input/text-input.component';
 import { AccountService } from '../_services/account.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
