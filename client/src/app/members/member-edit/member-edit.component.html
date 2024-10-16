@@ -35,11 +35,11 @@
         </div>
         <div>
           <label class="font-bold">Last active:</label>
-          <p>{{ member.lastActive }}</p>
+          <p>{{ member.lastActive | date }}</p>
         </div>
         <div>
           <label class="font-bold">Member since:</label>
-          <p>{{ member.created }}</p>
+          <p>{{ member.created | date }}</p>
         </div>
       </div>
       <div class="w-full flex px-2 py-4 justify-center gap-4">

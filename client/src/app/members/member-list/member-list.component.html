@@ -1,8 +1,87 @@
 <div class="w-full h-auto flex flex-col justify-between overflow-hidden gap-16">
-  <div class="flex justify-center w-full gap-8">
-    @for(member of memberService.paginatedResult()?.items; track member.id) {
-    <app-member-card [member]="member" />
-    }
+  <div class="w-full flex flex-col items-center gap-6">
+    <div class="w-[1500px] flex flex-col gap-16">
+      <h2 class="font-bold text-5xl self-center">
+        Your matches -<span class="text-custom-blue-100">
+          {{ memberService.paginatedResult()?.pagination?.totalItems }}</span
+        >
+      </h2>
+      <form class="flex gap-6" #form="ngForm" (ngSubmit)="loadMembers()">
+        <div class="h-[50px] w-auto flex gap-6 items-center">
+          <label class="text-xl">Age from:</label>
+          <input
+            class="bg-transparent outline-none rounded-xl w-[65px] h-full text-center border-2 border-custom-blue-200"
+            type="number"
+            name="minAge"
+            [(ngModel)]="memberService.userParams().minAge"
+            [min]="18"
+          />
+        </div>
+        <div class="h-[50px] w-auto flex gap-6 items-center">
+          <label class="text-xl">Age to:</label>
+          <input
+            class="bg-transparent outline-none rounded-xl w-[65px] h-full text-center border-2 border-custom-blue-200"
+            type="number"
+            name="maxAge"
+            [(ngModel)]="memberService.userParams().maxAge"
+            [max]="100"
+          />
+        </div>
+        <div class="h-[50px] w-auto flex gap-6 items-center">
+          <label class="text-xl">Show:</label>
+          <select
+            class="appearance-none bg-transparent outline-none rounded-xl w-[150px] h-full text-center border-2 border-custom-blue-200"
+            name="gender"
+            [(ngModel)]="memberService.userParams().gender"
+          >
+            @for (gender of genderList; track gender.value) {
+            <option class="bg-custom-black-100" [value]="gender.value">
+              {{ gender.display }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="h-[50px] w-auto flex gap-6 items-center">
+          <label class="text-xl">Sort by:</label>
+          <select
+            class="appearance-none bg-transparent outline-none rounded-xl w-[150px] h-full text-center border-2 border-custom-blue-200"
+            name="orderBy"
+            [(ngModel)]="memberService.userParams().orderBy"
+            (change)="loadMembers()"
+          >
+            <option value="lastActive" class="bg-custom-black-100">
+              Last Active
+            </option>
+            <option value="created" class="bg-custom-black-100">
+              Newest Members
+            </option>
+          </select>
+        </div>
+
+        <div class="w-auto flex gap-4 ml-auto">
+          <button
+            class="hover:bg-custom-blue-200 border-2 text-xl border-custom-blue-200 h-[50px] w-[175px] rounded-xl"
+            type="submit"
+          >
+            Apply filters
+          </button>
+          <button
+            class="border-2 text-xl hover:bg-custom-blue-200 border-custom-blue-200 h-[50px] w-[175px] rounded-xl"
+            (click)="resetFilters()"
+            type="button"
+          >
+            Reset filters
+          </button>
+        </div>
+      </form>
+    </div>
+    <div
+      class="flex justify-center items-center w-[1500px] gap-8 border-2 border-custom-blue-100 rounded-xl py-8"
+    >
+      @for(member of memberService.paginatedResult()?.items; track member.id) {
+      <app-member-card [member]="member" />
+      }
+    </div>
   </div>
 
   <div class="w-full h-[50px] flex justify-center items-center gap-4">
@@ -11,7 +90,9 @@
       (click)="pageChanged(number + 1)"
       class="size-12 rounded-full font-bold text-xl border-4 border-custom-blue-200 flex justify-center items-center"
       [ngClass]="
-        userParams.pageNumber === number + 1 ? 'bg-custom-blue-200' : ''
+        memberService.userParams().pageNumber === number + 1
+          ? 'bg-custom-blue-200'
+          : ''
       "
     >
       {{ number + 1 }}

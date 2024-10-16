@@ -34,6 +34,12 @@ public class UserRepository(DataContext dataContext, IMapper mapper) : IUserRepo
 
         query = query.Where(user => user.DateOfBirth >= minDob && user.DateOfBirth <= maxDob);
 
+        query = userParams.OrderBy switch
+        {
+            "created" => query.OrderByDescending(user => user.Created),
+            _ => query.OrderByDescending(user => user.LastActive)
+        };
+
         return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.pageNumber, userParams.PageSize);
     }
 

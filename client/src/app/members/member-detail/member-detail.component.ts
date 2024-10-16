@@ -2,13 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MembersService } from '../../_services/members.service';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '../../_modules/Member';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [NgClass, GalleryModule],
+  imports: [NgClass, GalleryModule, DatePipe],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css',
 })

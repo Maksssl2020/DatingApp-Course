@@ -21,7 +21,8 @@ public class TokenService(IConfiguration configuration) : ITokenService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, appUser.Username)
+            new(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+            new(ClaimTypes.Name, appUser.Username)
         };
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         var tokenDescriptor = new SecurityTokenDescriptor

@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import {
   Component,
   HostListener,
@@ -18,7 +18,7 @@ import e from 'express';
 @Component({
   selector: 'app-member-edit',
   standalone: true,
-  imports: [NgClass, FormsModule, PhotoEditorComponent],
+  imports: [NgClass, FormsModule, PhotoEditorComponent, DatePipe],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css',
 })

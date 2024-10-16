@@ -4,30 +4,43 @@ import { MemberCardComponent } from '../member-card/member-card.component';
 import { NgClass } from '@angular/common';
 import { AccountService } from '../../_services/account.service';
 import { UserParams } from '../../_modules/UserParams';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [MemberCardComponent, NgClass],
+  imports: [MemberCardComponent, NgClass, FormsModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.css',
 })
 export class MemberListComponent implements OnInit {
-  private accountService = inject(AccountService);
   memberService = inject(MembersService);
   totalPages = computed(
     () => this.memberService.paginatedResult()?.pagination?.totalPages ?? 0
   );
-  userParams = new UserParams(this.accountService.currentUser());
+  genderList = [
+    { value: 'male', display: 'Males' },
+    { value: 'female', display: 'Females' },
+  ];
+  currentPage: number = 1;
 
   ngOnInit(): void {
     if (!this.memberService.paginatedResult()) {
       this.loadMembers();
+    } else {
+      const savedPage = localStorage.getItem('currentMembersPage');
+      this.currentPage = savedPage ? +savedPage : 1;
+      this.memberService.userParams().pageNumber = this.currentPage;
     }
   }
 
   loadMembers() {
-    this.memberService.getMembers(this.userParams);
+    this.memberService.getMembers();
+  }
+
+  resetFilters() {
+    this.memberService.resetUserParams();
+    this.loadMembers();
   }
 
   getPaginationListNumbers(value: number): number[] {
@@ -41,9 +54,12 @@ export class MemberListComponent implements OnInit {
   }
 
   pageChanged(event: number) {
-    if (this.userParams.pageNumber !== event) {
-      this.userParams.pageNumber = event;
+    if (this.memberService.userParams().pageNumber !== event) {
+      this.currentPage = event;
+      this.memberService.userParams().pageNumber = this.currentPage;
       this.loadMembers();
+
+      localStorage.setItem('currentMembersPage', this.currentPage.toString());
     }
   }
 }
