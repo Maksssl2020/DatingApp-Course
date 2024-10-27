@@ -1,1 +1,53 @@
-<p>lists works!</p>
+<div class="w-full flex flex-col items-center gap-16">
+  <h1 class="text-4xl">{{ getTitle() }}</h1>
+
+  <div class="w-full flex flex-col px-16 gap-8">
+    <div class="w-full flex gap-4">
+      <button
+        [ngClass]="
+          activeButton === 'liked' ? 'bg-custom-blue-200' : 'bg-transparent'
+        "
+        (click)="setActiveButton('liked'); loadLikes()"
+        class="border-2 border-custom-blue-200 h-[50px] px-8 rounded-xl"
+      >
+        Members I like
+      </button>
+      <button
+        [ngClass]="
+          activeButton === 'likedBy' ? 'bg-custom-blue-200' : 'bg-transparent'
+        "
+        (click)="setActiveButton('likedBy'); loadLikes()"
+        class="border-2 border-custom-blue-200 h-[50px] px-8 rounded-xl"
+      >
+        Members who like me
+      </button>
+      <button
+        [ngClass]="
+          activeButton === 'mutual' ? 'bg-custom-blue-200' : 'bg-transparent'
+        "
+        (click)="setActiveButton('mutual'); loadLikes()"
+        class="border-2 border-custom-blue-200 h-[50px] px-8 rounded-xl"
+      >
+        Mutual
+      </button>
+    </div>
+    <div class="w-full flex flex-col gap-16">
+      <div class="w-full flex gap-12 justify-center">
+        @for (member of likeService.paginatedResult()?.items; track member.id) {
+        <app-member-card [member]="member" />
+        }
+      </div>
+      <div class="w-full flex gap-4 justify-center">
+        @for (number of getPaginationListNumbers(totalPages()); track $index) {
+        <button
+          (click)="pageChanged(number + 1)"
+          class="size-12 rounded-full font-bold text-xl border-4 border-custom-blue-200 flex justify-center items-center"
+          [ngClass]="pageNumber === number + 1 ? 'bg-custom-blue-200' : ''"
+        >
+          {{ number + 1 }}
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

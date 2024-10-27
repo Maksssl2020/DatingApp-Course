@@ -21,6 +21,7 @@
       </li>
       <li>
         <button
+          (click)="toggleLike()"
           class="bg-custom-blue-200 size-12 text-center text-[24px] text-white rounded-xl"
         >
           <i class="bi bi-heart"></i>
@@ -45,5 +46,8 @@
     class="w-full p-2 h-auto items-center justify-center flex text-[20px] text-custom-blue-100"
   >
     {{ member().city }}
+    @if (hasLiked()) {
+    <i class="bi bi-heart ml-2 pt-1 text-white"></i>
+    }
   </p>
 </div>
