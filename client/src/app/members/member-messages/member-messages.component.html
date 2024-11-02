@@ -1,0 +1,67 @@
+<div class="w-full h-auto mt-4">
+  <ul class="flex flex-col gap-2">
+    @for (message of messages(); track message.id) {
+    <li
+      class="w-full h-[75px] flex items-center border-b-2 border-custom-blue-100 pb-2"
+    >
+      @if (username() === message.senderUsername) {
+      <img
+        class="size-[60px] rounded-full mr-2"
+        src="{{ message.senderPhotoUrl || './user.png' }}"
+        alt=""
+      />
+      }
+
+      <div
+        [ngClass]="username() !== message.senderUsername ? 'ml-auto mr-2' : ''"
+        class="flex flex-col h-auto w-auto"
+      >
+        <p class="text-custom-blue-100">
+          @if (!message.dateRead && message.senderUsername !== username()) {
+          {{ message.messageSent | timeago }}
+          <span class="text-custom-white-100">( unread )</span>
+          } @else if(message.dateRead && message.senderUsername !== username())
+          {
+          {{ message.messageSent | timeago }}
+          <span class="text-custom-white-100"
+            >(read {{ message.dateRead | timeago }})</span
+          >
+          } @else {{{ message.messageSent | timeago }}}
+        </p>
+        <p class="text-lg">{{ message.content }}</p>
+      </div>
+      @if (username() !== message.senderUsername) {
+      <img
+        class="size-[60px] rounded-full"
+        src="{{ message.senderPhotoUrl || './user.png' }}"
+        alt="Image of user"
+      />
+      }
+    </li>
+    }
+  </ul>
+
+  <form
+    #messageForm="ngForm"
+    (ngSubmit)="sendMessage()"
+    class="w-full h-[50px] mt-8 flex"
+  >
+    <div class="w-full h-full flex relative">
+      <input
+        name="messageContent"
+        required
+        [(ngModel)]="messageContent"
+        type="text"
+        placeholder="Send a private message..."
+        class="w-full h-full border-2 border-custom-blue-100 bg-transparent rounded-xl px-2 text-custom-white-100 placeholder:text-custom-white-100 focus:outline-none focus:border-custom-blue-200"
+      />
+      <button
+        [disabled]="!messageForm.valid"
+        type="submit"
+        class="w-[100px] h-full absolute right-0 rounded-xl bg-custom-blue-100 uppercase font-bold tracking-wider"
+      >
+        Send
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,1 +1,95 @@
-<p>messages works!</p>
+<div class="w-full h-auto flex justify-center">
+  <div class="w-[1250px] h-auto flex flex-col gap-8">
+    <div class="w-auto h-[50px] flex gap-4 ml-2">
+      <button
+        (click)="container = 'Unread'; loadMessages()"
+        [ngClass]="
+          container === 'Unread'
+            ? 'bg-custom-blue-200 border-custom-white-100'
+            : 'bg-transparent border-custom-blue-200'
+        "
+        class="w-[125px] h-full border-2 rounded-xl"
+      >
+        Unread
+      </button>
+      <button
+        (click)="container = 'Inbox'; loadMessages()"
+        [ngClass]="
+          container === 'Inbox'
+            ? 'bg-custom-blue-200 border-custom-white-100'
+            : 'bg-transparent border-custom-blue-200'
+        "
+        class="w-[125px] h-full border-2 rounded-xl"
+      >
+        Inbox
+      </button>
+      <button
+        (click)="container = 'Outbox'; loadMessages()"
+        [ngClass]="
+          container === 'Outbox'
+            ? 'bg-custom-blue-200 border-custom-white-100'
+            : 'bg-transparent border-custom-blue-200'
+        "
+        class="w-[125px] h-full border-2 rounded-xl"
+      >
+        Outbox
+      </button>
+    </div>
+    @if (!messageService.paginatedResult()?.items ||
+    messageService.paginatedResult()?.items?.length === 0) {
+    <h1 class="w-full h-auto text-center text-5xl mt-8">
+      There are no messages here!
+    </h1>
+    } @else {
+    <div class="w-full has-auto">
+      <div
+        class="px-2 w-full h-[35px] grid grid-cols-8 font-bold tracking-wider"
+      >
+        <label class="uppercase col-span-3">Message</label>
+        <label class="uppercase col-span-2">From / to</label>
+        <label class="uppercase col-span-2">Sent / Received</label>
+      </div>
+      <ul class="w-full h-auto flex flex-col">
+        @for (message of messageService.paginatedResult()?.items; track
+        message.id) {
+        <li
+          routerLink="{{ getRoute(message) }}"
+          [queryParams]="{ tab: 'messages' }"
+          class="w-full h-[75px] grid grid-cols-8 border-b-2 border-custom-blue-100 items-center px-2 hover:cursor-pointer hover:bg-custom-gray-100"
+        >
+          <p class="col-span-3 text-lg">{{ message.content }}</p>
+          <div class="col-span-2 flex gap-2 items-center">
+            <img
+              class="rounded-full size-[60px] border-2 border-custom-white-100"
+              src="{{ message.senderPhotoUrl }}"
+            />
+            <p>{{ message.senderUsername }}</p>
+          </div>
+          <p class="col-span-2 text-custom-blue-100">
+            {{ message.messageSent | timeago }}
+          </p>
+          <button
+            (click)="$event.stopPropagation(); deleteMessage(message.id)"
+            class="col-span-1 h-[50px] w-[100px] border-2 border-custom-white-100 rounded-xl bg-custom-blue-200 uppercase tracking-wider"
+          >
+            Delete
+          </button>
+        </li>
+        }
+      </ul>
+
+      <div class="w-full flex gap-4 justify-center mt-16">
+        @for (number of getPaginationListNumbers(totalPages()); track $index) {
+        <button
+          (click)="pageChanged(number + 1)"
+          class="size-12 rounded-full font-bold text-xl border-4 border-custom-blue-200 flex justify-center items-center"
+          [ngClass]="pageNumber === number + 1 ? 'bg-custom-blue-200' : ''"
+        >
+          {{ number + 1 }}
+        </button>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>

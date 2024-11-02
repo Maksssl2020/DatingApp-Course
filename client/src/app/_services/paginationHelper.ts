@@ -1,6 +1,6 @@
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { signal } from '@angular/core';
-import { PaginatedResult } from '../_modules/Pagination';
+import { PaginatedResult } from '../_models/Pagination';
 
 export function setPaginatedResponse<T>(
   response: HttpResponse<T>,

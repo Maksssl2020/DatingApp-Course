@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable, model, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Member } from '../_modules/Member';
-import { PaginatedResult } from '../_modules/Pagination';
-import { Photo } from '../_modules/Photo';
-import { UserParams } from '../_modules/UserParams';
+import { Member } from '../_models/Member';
+import { PaginatedResult } from '../_models/Pagination';
+import { Photo } from '../_models/Photo';
+import { UserParams } from '../_models/UserParams';
 import { of } from 'rxjs';
 import { AccountService } from './account.service';
 import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';

@@ -8,12 +8,10 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Member } from '../../_modules/Member';
+import { Member } from '../../_models/Member';
 import { AccountService } from '../../_services/account.service';
 import { MembersService } from '../../_services/members.service';
 import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
-import { Photo } from '../../_modules/Photo';
-import e from 'express';
 
 @Component({
   selector: 'app-member-edit',

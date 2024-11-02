@@ -1,10 +1,8 @@
+import { NgClass } from '@angular/common';
 import { Component, computed, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MembersService } from '../../_services/members.service';
 import { MemberCardComponent } from '../member-card/member-card.component';
-import { NgClass } from '@angular/common';
-import { AccountService } from '../../_services/account.service';
-import { UserParams } from '../../_modules/UserParams';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-member-list',

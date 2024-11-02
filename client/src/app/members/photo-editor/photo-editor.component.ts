@@ -6,10 +6,10 @@ import {
   output,
   ViewChild,
 } from '@angular/core';
-import { Member } from '../../_modules/Member';
+import { Member } from '../../_models/Member';
 import { DecimalPipe, NgClass } from '@angular/common';
 import { MembersService } from '../../_services/members.service';
-import { Photo } from '../../_modules/Photo';
+import { Photo } from '../../_models/Photo';
 import { AccountService } from '../../_services/account.service';
 
 @Component({

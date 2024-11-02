@@ -1,9 +1,8 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
-import { LikesService } from '../_services/likes.service';
-import { Member } from '../_modules/Member';
-import { MemberCardComponent } from '../members/member-card/member-card.component';
-import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { LikesService } from '../_services/likes.service';
+import { MemberCardComponent } from '../members/member-card/member-card.component';
 
 @Component({
   selector: 'app-lists',

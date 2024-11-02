@@ -29,6 +29,8 @@
       </li>
       <li>
         <button
+          routerLink="/members/{{ member().username }}"
+          [queryParams]="{ tab: 'messages' }"
           class="bg-custom-blue-200 size-12 text-center text-[24px] text-white rounded-xl"
         >
           <i class="bi bi-chat"></i>

@@ -5,26 +5,26 @@
     <div class="w-full h-auto rounded-t-xl p-12">
       <img
         class="size-full rounded-xl inset-0 object-cover border-2 border-custom-blue-200"
-        src="{{ member?.photoUrl ? member?.photoUrl : '/user.png' }}"
-        alt="{{ member?.knownAs }}"
+        src="{{ member.photoUrl ? member.photoUrl : '/user.png' }}"
+        alt="{{ member.knownAs }}"
       />
     </div>
     <div class="w-full h-auto py-2 px-6 flex flex-col gap-3 text-xl">
       <div>
         <label class="font-bold">Location:</label>
-        <p>{{ member?.city }}, {{ member?.country }}</p>
+        <p>{{ member.city }}, {{ member.country }}</p>
       </div>
       <div>
         <label class="font-bold">Age:</label>
-        <p>{{ member?.age }}</p>
+        <p>{{ member.age }}</p>
       </div>
       <div>
         <label class="font-bold">Last active:</label>
-        <p>{{ member?.lastActive | date }}</p>
+        <p>{{ member.lastActive | date }}</p>
       </div>
       <div>
         <label class="font-bold">Member since:</label>
-        <p>{{ member?.created | date }}</p>
+        <p>{{ member.created | date }}</p>
       </div>
     </div>
     <div class="w-full h-auto flex px-2 py-4 justify-center gap-4">
@@ -34,6 +34,7 @@
         Like
       </button>
       <button
+        (click)="setSelectedTab('messages')"
         class="uppercase bg-custom-blue-100 hover:bg-custom-blue-200 h-[50px] w-[200px] border-2 rounded-xl font-bold text-xl"
       >
         Message
@@ -45,50 +46,50 @@
       class="w-full h-[75px] border-b-2 border-custom-blue-200 flex px-6 gap-4 text-xl"
     >
       <button
-        (click)="setSelectedButton('about')"
-        [ngClass]="{ 'text-custom-blue-200': isButtonSelected('about') }"
+        (click)="setSelectedTab('about')"
+        [ngClass]="{ 'text-custom-blue-200': isTabSelected('about') }"
       >
-        About {{ member?.knownAs }}
+        About {{ member.knownAs }}
       </button>
       <button
-        (click)="setSelectedButton('interests')"
-        [ngClass]="{ 'text-custom-blue-200': isButtonSelected('interests') }"
+        (click)="setSelectedTab('interests')"
+        [ngClass]="{ 'text-custom-blue-200': isTabSelected('interests') }"
       >
         Interests
       </button>
       <button
-        (click)="setSelectedButton('photos')"
-        [ngClass]="{ 'text-custom-blue-200': isButtonSelected('photos') }"
+        (click)="setSelectedTab('photos')"
+        [ngClass]="{ 'text-custom-blue-200': isTabSelected('photos') }"
       >
         Photos
       </button>
       <button
-        (click)="setSelectedButton('messages')"
-        [ngClass]="{ 'text-custom-blue-200': isButtonSelected('messages') }"
+        (click)="setSelectedTab('messages')"
+        [ngClass]="{ 'text-custom-blue-200': isTabSelected('messages') }"
       >
         Messages
       </button>
     </div>
     <div class="flex py-4">
-      @if (isButtonSelected('about')) {
+      @if (isTabSelected('about')) {
       <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-2">
           <h2 class="font-bold text-3xl">Description</h2>
-          <div class="text-lg">{{ member?.introduction }}</div>
+          <div class="text-lg">{{ member.introduction }}</div>
         </div>
         <div class="flex flex-col gap-2">
           <h2 class="font-bold text-3xl">Looking for</h2>
-          <div class="text-lg">{{ member?.lookingFor }}</div>
+          <div class="text-lg">{{ member.lookingFor }}</div>
         </div>
       </div>
-      } @else if (isButtonSelected('interests')) {
+      } @else if (isTabSelected('interests')) {
       <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-2">
           <h2 class="font-bold text-3xl">Interests</h2>
-          <div class="text-lg">{{ member?.interests }}</div>
+          <div class="text-lg">{{ member.interests }}</div>
         </div>
       </div>
-      } @else if (isButtonSelected('photos')) {
+      } @else if (isTabSelected('photos')) {
       <div class="w-full h-auto gap-2">
         <gallery
           [items]="images"
@@ -96,11 +97,13 @@
           thumbPosition="left"
         ></gallery>
       </div>
-      } @else if (isButtonSelected('messages')) {
-      <div class="flex flex-col gap-6">
-        <div class="flex flex-col gap-2">
-          <h2 class="font-bold text-3xl">Messages will be there!</h2>
-        </div>
+      } @else if (isTabSelected('messages')) {
+      <div class="flex flex-col w-full h-auto">
+        <app-member-messages
+          [username]="member.username"
+          [messages]="messages"
+          (updateMessages)="onUpdateMessages($event)"
+        />
       </div>
       }
     </div>

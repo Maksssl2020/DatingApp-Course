@@ -1,5 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { Member } from '../../_modules/Member';
+import { Member } from '../../_models/Member';
 import { RouterLink } from '@angular/router';
 import { LikesService } from '../../_services/likes.service';
 
