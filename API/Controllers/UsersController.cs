@@ -111,7 +111,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
 
         if (await userRepository.SaveAllAsync())
         {
-            return CreatedAtAction(nameof(GetUserByUsername), new { username = user.Username }, photos);
+            return CreatedAtAction(nameof(GetUserByUsername), new { username = user.UserName }, photos);
         }
         else
         {

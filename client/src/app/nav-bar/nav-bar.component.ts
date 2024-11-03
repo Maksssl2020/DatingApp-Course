@@ -11,11 +11,18 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [FormsModule, RouterLink, RouterLinkActive, TitleCasePipe],
+  imports: [
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    TitleCasePipe,
+    HasRoleDirective,
+  ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
   animations: [

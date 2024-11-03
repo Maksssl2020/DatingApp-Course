@@ -1,0 +1,40 @@
+<div class="w-full h-auto flex flex-col items-center gap-12">
+  <h1 class="text-5xl text-custom-blue-200">Admin panel</h1>
+  <div
+    class="w-[1250px] min-h-[350px] border-2 border-custom-blue-100 rounded-xl"
+  >
+    <div
+      class="h-[75px] w-full flex gap-4 px-4 border-b-[1px] border-custom-blue-100"
+    >
+      <button
+        (click)="setSelectedTab('userManagement')"
+        [ngClass]="
+          isTabSelected('userManagement')
+            ? ' text-custom-blue-200'
+            : ' text-white'
+        "
+        class="w-auto h-full text-xl"
+      >
+        User management
+      </button>
+      <button
+        (click)="setSelectedTab('photoManagement')"
+        [ngClass]="
+          isTabSelected('photoManagement')
+            ? ' text-custom-blue-200'
+            : ' text-white'
+        "
+        class="w-auto h-full text-xl"
+      >
+        Photo management
+      </button>
+    </div>
+    <div class="w-full has-auto p-4">
+      @if (isTabSelected('userManagement')) {
+      <app-user-management />
+      } @if (isTabSelected('photoManagement')) {
+      <app-photo-management />
+      }
+    </div>
+  </div>
+</div>

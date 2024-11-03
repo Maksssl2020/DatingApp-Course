@@ -1,0 +1,29 @@
+<div class="w-full h-full">
+  <div
+    class="w-full h-[50px] grid grid-cols-3 font-bold text-xl tracking-wider border-b-2 border-custom-blue-200"
+  >
+    <label>Username</label>
+    <label>Active roles</label>
+  </div>
+  <div class="w-full h-auto mt-4 flex flex-col gap-2">
+    @for (user of users; track user.username) {
+    <div class="w-full h-[75px] grid grid-cols-3 items-center border-b-2">
+      <label>{{ user.username }}</label>
+      <label>{{ user.roles }}</label>
+      <button
+        (click)="openModal(user)"
+        class="w-[125px] h-[50px] border-2 uppercase rounded-xl border-custom-blue-200"
+      >
+        Edit roles
+      </button>
+    </div>
+    }
+  </div>
+  @if (isModalOpen) {
+  <app-roles-modal
+    [availableRoles]="['Admin', 'Moderator', 'Member']"
+    [user]="selectedUser!"
+    (closeModal)="closeModal()"
+  />
+  }
+</div>

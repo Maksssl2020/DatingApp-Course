@@ -29,6 +29,14 @@
         >Messages</a
       >
     </li>
+    <li *appHasRole="['Admin', 'Moderator']">
+      <a
+        routerLink="/admin"
+        routerLinkActive="text-custom-blue-200"
+        class="hover:text-custom-blue-200"
+        >Admin</a
+      >
+    </li>
     }
   </ul>
   @if (accountService.currentUser()) {

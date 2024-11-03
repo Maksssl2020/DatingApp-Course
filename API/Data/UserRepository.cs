@@ -22,7 +22,7 @@ public class UserRepository(DataContext dataContext, IMapper mapper) : IUserRepo
     {
         var query = dataContext.Users.AsQueryable();
 
-        query = query.Where(user => user.Username != userParams.CurrentUsername);
+        query = query.Where(user => user.UserName != userParams.CurrentUsername);
 
         if (userParams.Gender != null)
         {
@@ -51,7 +51,7 @@ public class UserRepository(DataContext dataContext, IMapper mapper) : IUserRepo
     public async Task<MemberDto?> GetMemberByUsernameAsync(string username)
     {
         return await dataContext.Users
-        .Where(user => user.Username == username)
+        .Where(user => user.NormalizedUserName == username.ToUpper())
         .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
         .SingleOrDefaultAsync();
     }
@@ -60,7 +60,7 @@ public class UserRepository(DataContext dataContext, IMapper mapper) : IUserRepo
     {
         return await dataContext.Users
         .Include(user => user.Photos)
-        .SingleOrDefaultAsync(user => user.Username == username);
+        .SingleOrDefaultAsync(user => user.UserName == username);
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()

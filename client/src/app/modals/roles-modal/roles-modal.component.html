@@ -1,0 +1,43 @@
+<div
+  class="w-full h-full fixed inset-0 z-10 backdrop-blur-md flex items-start justify-center"
+>
+  <div
+    class="w-[750px] h-[450px] bg-custom-gray-100 rounded-xl self-center flex flex-col"
+  >
+    <div
+      class="w-full h-[100px] border-b-2 border-custom-blue-100 flex justify-center items-center relative"
+    >
+      <h2 class="text-5xl text-custom-blue-100">User roles</h2>
+      <button
+        type="button"
+        (click)="this.closeModalEmit()"
+        class="size-10 absolute right-0 mr-4 rounded-full border-2 border-custom-blue-100 text-custom-blue-100 flex justify-center items-center"
+      >
+        <i class="bi bi-x-lg text-xl h-[26px] w-[26px]"></i>
+      </button>
+    </div>
+    <div class="w-full h-auto p-8 flex flex-col gap-2 font-bold text-2xl">
+      @for (role of availableRoles(); track $index) {
+      <div class="flex gap-2">
+        <p>{{ role }}</p>
+        <input
+          [value]="role"
+          type="checkbox"
+          [checked]="selectedRoles.includes(role)"
+          (change)="updateChecked(role)"
+          [disabled]="role === 'Admin'"
+        />
+      </div>
+      }
+    </div>
+    <div class="w-full h-auto px-4 mt-auto mb-4">
+      <button
+        [disabled]="selectedRoles.length === 0"
+        class="w-full h-[50px] uppercase font-bold tracking-wider border-2 border-custom-blue-100 rounded-xl"
+        (click)="onSelectedRoles()"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
